@@ -42,7 +42,6 @@ def getNewsHrefs():
             print (item[10:-2])
             run.font.bold = True#加粗
 
-
             timearray = time.localtime(int(times[i][8:-1]))
             otherstyletime = time.strftime("%m-%d %H:%M", timearray)
             run = text.add_run(otherstyletime)

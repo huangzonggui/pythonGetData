@@ -25,7 +25,7 @@ def getNewsHrefs():
         "Accept-Encoding": ""
     }
     
-    while  page <= 50:
+    while  page <= 160:
         req = request.Request(
         "http://" + host + "/interface/rollnews_ch_out_interface.php?col=89&spec=&type=&ch=01&k=&offset_page=0&offset_num=0&num=60&asc=&page="+str(page)+"&r=0.6575086962964121",
                               headers = headers
@@ -46,7 +46,7 @@ def getNewsHrefs():
             timearray = time.localtime(int(times[i][8:-1]))
             otherstyletime = time.strftime("%m-%d %H:%M", timearray)
             run = text.add_run(otherstyletime)
-            print (otherstyletime)
+            #print (otherstyletime)
             i=i+1
        
         page = page + 1

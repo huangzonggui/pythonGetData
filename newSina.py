@@ -18,7 +18,7 @@ doc=Document()  #新建文档x
 doc.add_paragraph(dateStr)
 text = doc.add_paragraph('新浪')
 
-def getNewsHrefs():
+def getSinaNews():
     page = 1
     headers = {
         "Referer" : "http://" + host,   #需要添加Referer头部，否则请求失败
@@ -41,10 +41,12 @@ def getNewsHrefs():
             run = text.add_run('\n'+ item[10:-2] + '  ')
             print (item[10:-2])
             run.font.bold = True#加粗
+            run.font.size = Pt(7)
 
             timearray = time.localtime(int(times[i][8:-1]))
             otherstyletime = time.strftime("%m-%d %H:%M", timearray)
             run = text.add_run(otherstyletime)
+            run.font.size = Pt(6)
             #print (otherstyletime)
             i=i+1
        
@@ -53,7 +55,7 @@ def getNewsHrefs():
 
 
 if __name__ == "__main__":
-    getNewsHrefs()
+    getSinaNews()
 
     saveFile=os.getcwd()+"\\新浪"+localtime+".docx"  
     doc.save(saveFile)#根据saveFile的路径和文件名保存文件

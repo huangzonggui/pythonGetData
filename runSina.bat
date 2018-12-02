@@ -1,1 +1,1 @@
-start cmd /k "python newSina.py"
+start cmd /k "python sinaV2.0.py"

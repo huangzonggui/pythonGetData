@@ -80,7 +80,7 @@ def wirteTenToDoc():
     run.font.bold = True
     host = "roll.finance.qq.com"
     page=1
-    while page <= 14:
+    while page <= 25:
         #print(page)
         time.sleep(0.5)
         headers = {#为什么将这个头放在while外面不行？？？第二个以后的请求都是Access defined

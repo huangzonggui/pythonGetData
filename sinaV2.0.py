@@ -12,7 +12,7 @@ import json
 
 #host = "roll.news.sina.com.cn"
 host = "feed.mix.sina.com.cn"
-pageNum = 161
+pageNum = 1
 
 localtime = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())#日期
 dateStr = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())

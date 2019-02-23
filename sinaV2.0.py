@@ -32,7 +32,7 @@ def getSinaNews():
         "Accept-Encoding": ""
     }
     
-    while  pageNum <= 300 :
+    while  pageNum <= 500 :
         print (pageNum)
         req = request.Request(
         "https://"+ host +"/api/roll/get?pageid=153&lid=2509&k=&num=50&page="+str(pageNum)+"&r=0.7447433997811357",
@@ -41,6 +41,7 @@ def getSinaNews():
         response = request.urlopen(req)
 
         jsonData = response.read(500000).decode("unicode_escape")
+        #print (jsonData)
         ret = re.findall(r",\"title\":\".*?,", jsonData)#?非贪婪匹配
         times = re.findall(r"\"ctime\":\".*?,", jsonData)
         #print (ret)
@@ -49,7 +50,7 @@ def getSinaNews():
 
         i = 0
         for item in ret: 
-            print (item[10: -2])
+            #print (item)
 
             run = text.add_run('\n'+ item[10:-2] + '  ')
 
@@ -57,16 +58,17 @@ def getSinaNews():
             run.font.bold = True#加粗
             run.font.size = Pt(9)
 
-            timearray = time.localtime(int(times[i][9:-2]))
-            #print (times[i][9:-2])
-            otherstyletime = time.strftime("%m-%d %H:%M", timearray)
-            run = text.add_run(otherstyletime)
-            run.font.size = Pt(8)
-            print (otherstyletime)
+            #print (times[i])
+            if i <= len(times) - 1:
+                timearray = time.localtime(int(times[i][9:-2]))
+                otherstyletime = time.strftime("%m-%d %H:%M", timearray)
+                run = text.add_run(otherstyletime)
+                run.font.size = Pt(8)
+            #print (otherstyletime)
             i=i+1
        
         pageNum = pageNum + 1
-        time.sleep(1)
+        time.sleep(10)
     return ret
 
 

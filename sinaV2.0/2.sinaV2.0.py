@@ -12,7 +12,7 @@ import json
 
 #host = "roll.news.sina.com.cn"
 host = "feed.mix.sina.com.cn"
-pageNum = 1
+pageNum = 91
 
 localtime = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())#日期
 dateStr = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime()) 
@@ -32,7 +32,7 @@ def getSinaNews():
         "Accept-Encoding": ""
     }
     
-    while  pageNum <= 350 :
+    while  pageNum <= 180 :
         print (pageNum)
         req = request.Request(
         "https://"+ host +"/api/roll/get?pageid=153&lid=2509&k=&num=50&page="+str(pageNum)+"&r=0.7447433997811357",

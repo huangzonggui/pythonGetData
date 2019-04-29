@@ -15,14 +15,13 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 #host = "roll.news.sina.com.cn"
 host = "feed.mix.sina.com.cn"
-pageNum = 79
+pageNum = 1
 
 localtime = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())#日期
 dateStr = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime()) 
 doc=Document()  #新建文档x
 #doc.add_paragraph(dateStr)
 text = doc.add_paragraph('')
-
 def getSinaNews():
     global pageNum
     headers = {
@@ -83,4 +82,4 @@ if __name__ == "__main__":
         saveFile="sina"+localtime+".docx"  
         doc.save(saveFile)#根据saveFile的路径和文件名保存文件
 
-     
+    

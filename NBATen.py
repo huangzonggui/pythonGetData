@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
-#author:王得伟Dewitt
-#email:wangdewei1996@163.com
-#date:2017.09.05
-
+# -*- coding:UTF-8 -*-
 from urllib import request
 import os  
 import re
@@ -14,24 +9,33 @@ from docx import Document
 from docx.shared import Inches 
 from docx.shared import Pt
 import time  # 引入time模块
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 localtime = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())#日期
 dateStr = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())
 # 格式化成2016-03-20 11:45:39形式
 #localtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) 
-doc=Document()  #新建文档
+#doc=Document()  #新建文档
 ##word title  
 #doc.add_paragraph(dateStr)
-text = doc.add_paragraph('')
+#text = doc.add_paragraph('')
 #doc.add_heading('腾讯财经',0)
+
+NBADoc=Document()  #新建文档
+NBAText = NBADoc.add_paragraph('')
+
+TenDoc=Document()  #新建文档
+TenText = TenDoc.add_paragraph('')
 
 def wirteNBAToDoc():
     '''
     向后台发起请求，把需要的内容写入docx文档中
     '''
-    run = text.add_run('\nNBA：')
-    run.font.size = Pt(20)
-    run.font.bold = True
+    #run = NBAText.add_run('\nNBA：')
+    #run.font.size = Pt(20)
+    #run.font.bold = True
 
     host = "sports.qq.com"
     headers = {#为什么将这个头放在while外面不行？？？第二个以后的请求都是Access defined
@@ -58,7 +62,7 @@ def wirteNBAToDoc():
             "a",
             {"class": "fs14"}
         )
-        print(title)
+        #print(title)
 
         timeStr = bsObj.find(
             "span",
@@ -67,17 +71,18 @@ def wirteNBAToDoc():
         print(timeStr)
 
         if title != None:            
-            run = text.add_run('\n'+str(title.string))
+            run = NBAText.add_run('\n'+str(title.string))
             run.font.bold = True#加粗
             run.font.size = Pt(9)
 
-            run = text.add_run(str(timeStr.string))
+            run = NBAText.add_run(str(timeStr.string))
             run.font.size = Pt(8)
             run.italic = True#斜体
+
 def wirteTenToDoc():
-    run = text.add_run('\n腾讯财经：')
-    run.font.size = Pt(20)
-    run.font.bold = True
+    #run = TenText.add_run('\n腾讯财经：')
+    #run.font.size = Pt(20)
+    #run.font.bold = True
     host = "roll.finance.qq.com"
     page=1
     while page <= 25:
@@ -106,12 +111,12 @@ def wirteTenToDoc():
 
         i = 0
         for item in ret: 
-            run = text.add_run('\n'+ item[7:-5] + '  ')
+            run = TenText.add_run('\n'+ item[7:-5] + '  ')
             print (item[7:-5])
             run.font.bold = True#加粗
             run.font.size = Pt(9)
 
-            run = text.add_run(times[i][9:-8])
+            run = TenText.add_run(times[i][9:-8])
             run.font.size = Pt(8)
             print (times[i][9:-8])
             i=i+1
@@ -120,7 +125,13 @@ def wirteTenToDoc():
     return ret
 
 if __name__ == "__main__":
-    wirteNBAToDoc()#把标题时间抽取出来放在doc中
-    wirteTenToDoc()
-    saveFile=os.getcwd()+"\\腾讯NBA新闻"+localtime+".docx"  
-    doc.save(saveFile)#根据saveFile的路径和文件名保存文件
+    try:
+        wirteNBAToDoc()#把标题时间抽取出来放在doc中
+    finally:
+        saveFile="NBA"+localtime+".docx"  
+        NBADoc.save(saveFile)#根据saveFile的路径和文件名保存文件
+    try:
+        wirteTenToDoc()
+    finally:
+        saveFile="Ten"+localtime+".docx"  
+        TenDoc.save(saveFile)#根据saveFile的路径和文件名保存文件

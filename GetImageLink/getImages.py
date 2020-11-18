@@ -51,7 +51,8 @@ def getLink():
             # print (titleList[i])
             # getData(item, title)
             # getData(item) # 第一種方式
-            getByMultiTag(item) # 第二種方式
+            # getByMultiTag(item) # 第二種方式
+            getBySelect(item)
             i+=1
 
 
@@ -96,6 +97,15 @@ def getByMultiTag(itemLink):
 
     # ulString = soup.find_all('a', href=True) 
     for item in imgList: print (item)
+
+def getBySelect(itemLink):
+   response = requests.get(linkHost + itemLink)
+   soup = BeautifulSoup(response.text, "html.parser")
+
+   imgList = soup.select("li a")
+   for item in imgList: 
+       print (item) 
+    #    print (re.find())
 
 
 getLink()
